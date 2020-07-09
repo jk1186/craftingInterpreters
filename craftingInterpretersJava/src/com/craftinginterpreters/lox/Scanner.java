@@ -105,9 +105,20 @@ public class Scanner {
 
             case '/':
                 if (match('/')) {
-                    // Comments consumes till end of line
+                    // Comments consumes till end of line - single line
                     while (peek() != '\n' && !isAtEnd()) advance();
-                } else {
+
+                }else if (match('*')) {
+                    // Comments consumer until end of block - multi line
+                    while (peek() != '*' && peekNext() != '/'){
+                        if (peek() == '\n'){
+                            line++;
+                        }
+                        advance();
+                    }
+                    advance();
+                    advance();
+                }else {
                     addToken(SLASH);
                 }
                 break;
