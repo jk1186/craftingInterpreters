@@ -1,6 +1,6 @@
 # Crafting Interpreters
 
-===
+
 
 My version of the interpreter for the lox programming language.
 
