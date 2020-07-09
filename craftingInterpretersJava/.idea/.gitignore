@@ -5,4 +5,16 @@
 /dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
+*.class
 /httpRequests/
+/../craftingInterpreters.iml
+/description.html
+/encodings.xml
+/misc.xml
+/modules.xml
+/project-template.xml
+/../out/production/craftingInterpreters/com/craftinginterpreters/lox/Scanner.class
+/../out/production/craftingInterpreters/com/craftinginterpreters/lox/Token.class
+/../out/production/craftingInterpreters/com/craftinginterpreters/lox/TokenType.class
+/vcs.xml
+/../../.idea/workspace.xml
