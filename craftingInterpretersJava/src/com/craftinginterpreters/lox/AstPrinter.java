@@ -27,6 +27,7 @@ public class AstPrinter implements Expr.Visitor<String> {
         return parenthesize(expr.operator.lexeme, expr.right);
     }
 
+
     private String parenthesize(String name, Expr... exprs) {
         StringBuilder builder = new StringBuilder();
 
@@ -39,11 +40,7 @@ public class AstPrinter implements Expr.Visitor<String> {
         return builder.toString();
     }
 
-    /**Testing only, check tree is being parsed correctly
-     *
-     *
-     * @param args
-     */
+    /**Testing only, check tree is being parsed correctly*/
     public static void main(String[] args) {
         Expr expression = new Expr.Binary(
                 new Expr.Unary(
