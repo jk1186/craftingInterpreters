@@ -16,10 +16,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
         }
     }
 
-    private Object evaluate(Expr expr) {
-        Object result = expr.accept(this);
-        return result;
-    }
+    private Object evaluate(Expr expr) { return expr.accept(this); }
 
     private void execute(Stmt stmt) {
          stmt.accept(this);
