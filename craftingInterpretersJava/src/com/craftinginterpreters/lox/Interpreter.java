@@ -17,7 +17,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     private Object evaluate(Expr expr) {
-        return expr.accept(this);
+        Object result = expr.accept(this);
+        return result;
     }
 
     private void execute(Stmt stmt) {
@@ -45,7 +46,8 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Void visitExpressionStmt(Stmt.Expression stmt) {
-        evaluate(stmt.expression);
+        Object result = evaluate(stmt.expression);
+        System.out.println(stringify(result));
         return null;
     }
 

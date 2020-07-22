@@ -67,7 +67,11 @@ public class Parser {
 
     private Stmt expressionStatement() {
         Expr expr = expression();
-        consume(SEMICOLON, "Expect ';' after expression.");
+        if (!Lox.inPrompt) {
+            consume(SEMICOLON, "Expect ';' after expression.");
+        } else {
+            advance();
+        }
         return new Stmt.Expression(expr);
     }
 
