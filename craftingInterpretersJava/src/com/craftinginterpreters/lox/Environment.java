@@ -1,18 +1,22 @@
 package com.craftinginterpreters.lox;
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Enviroment {
+public class Environment {
 
-    final Enviroment enclosing;
+    final Environment enclosing;
+    private final List<String> uninitializedVariables = new ArrayList<>();
     private final Map<String, Object> values = new HashMap<>();
 
-    Enviroment() {
+    Environment() {
         enclosing = null;
     }
 
-    Enviroment(Enviroment enclosing) {
+    Environment(Environment enclosing) {
         this.enclosing = enclosing;
     }
 
@@ -27,7 +31,7 @@ public class Enviroment {
     }
 
     void assign(Token name, Object value) {
-        if(values.containsKey(name.lexeme)) {
+        if(values.containsKey(name.lexeme) || uninitializedVariables.contains(name.lexeme)) {
             values.put(name.lexeme, value);
             return;
         }
@@ -41,6 +45,10 @@ public class Enviroment {
     }
 
     void define(String name, Object value) {
-        values.put(name, value);
+        if (value != null) {
+            values.put(name, value);
+        } else {
+            uninitializedVariables.add(name);
+        }
     }
 }

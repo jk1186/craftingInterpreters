@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
-    private Enviroment enviroment = new Enviroment();
+    private Environment environment = new Environment();
 
     void interpret(List<Stmt> statements) {
         try {
@@ -22,22 +22,22 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
          stmt.accept(this);
     }
 
-    void executeBlock(List<Stmt> statements, Enviroment enviroment) {
-        Enviroment previous = this.enviroment;
+    void executeBlock(List<Stmt> statements, Environment environment) {
+        Environment previous = this.environment;
 
         try {
-            this.enviroment = enviroment;
+            this.environment = environment;
 
             for (Stmt statement : statements) {
                 execute(statement);
             }
         } finally {
-            this.enviroment = previous;
+            this.environment = previous;
         }
     }
     @Override
     public Void visitBlockStmt(Stmt.Block stmt) {
-        executeBlock(stmt.statements, new Enviroment(enviroment));
+        executeBlock(stmt.statements, new Environment(environment));
         return null;
     }
 
@@ -62,14 +62,14 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             value = evaluate(stmt.initializer);
         }
 
-        enviroment.define(stmt.name.lexeme, value);
+        environment.define(stmt.name.lexeme, value);
         return null;
     }
 
     @Override
     public Object visitAssignExpr(Expr.Assign expr) {
         Object value = evaluate(expr.value);
-        enviroment.assign(expr.name, value);
+        environment.assign(expr.name, value);
         return value;
     }
 
@@ -152,7 +152,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
     @Override
     public Object visitVariableExpr(Expr.Variable expr) {
-        return enviroment.get(expr.name);
+        return environment.get(expr.name);
     }
 
     private void checkNumberOperand(Token operator, Object operand) {
@@ -178,7 +178,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     }
 
     private String stringify(Object object) {
-        if (object == null) return "nill";
+        if (object == null) return "nil";
 
         if (object instanceof Double) {
             String text = object.toString();
